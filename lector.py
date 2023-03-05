@@ -15,7 +15,6 @@ def split_cadenas(line):
   for token in list:
     lexerAritmetico(token)
 
-
 def lexerAritmetico(tokens):
 #    print(tokens)
    
