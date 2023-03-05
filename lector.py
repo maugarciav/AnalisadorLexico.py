@@ -1,8 +1,5 @@
 import re
 
-
-
-
 def split_cadenas(line):
   numeros_reales_pattern = r'[-]?[\.]?\d+[.]?\d*[(e|E)]?[-]?\d*'
   variables_pattern = r'[A-Za-z][\w]*'
@@ -11,14 +8,12 @@ def split_cadenas(line):
   
   list = re.findall(numeros_reales_pattern + "|" + variables_pattern + "|" + comment_patern + "|" + operadores_pattern,line) 
 
-#   print(list)
+# LLamamos funcion principal
   for token in list:
     lexerAritmetico(token)
 
 def lexerAritmetico(tokens):
-#    print(tokens)
-   
-   patern= r'.*'
+
    estados_aceptacion = {1,2,3,7,8,10,11,12,13,14,15,16,17}
 
 
