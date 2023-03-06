@@ -1,5 +1,4 @@
 import re
-from tabulate import tabulate
 
 """
 Conjunto de estados = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17}
@@ -17,15 +16,17 @@ def split_cadenas(line):
   operadores_pattern  = r'[=*+-/^()]'
   
 # Los token se agregan a un arreglo 
-  list = re.findall(numeros_reales_pattern + "|" + variables_pattern + "|" + comment_patern + "|" + operadores_pattern,line) 
+  list_token = re.findall(numeros_reales_pattern + "|" + variables_pattern + "|" + comment_patern + "|" + operadores_pattern,line) 
 
 # LLamamos funcion principal iternado sobre el arreglo con los tokens
-  for token in list:
+  for token in list_token:
     lexerAritmetico(token)
 
-def lexerAritmetico(tokens):
 
-# Funcion transicion
+
+
+def lexerAritmetico(token):
+# Tabla de transición del Autómata Finito Determinístico.
    d = [
         {'a': 8, 'b': 8, 'c': 8, 'd': 8, 'e': 8, 'f': 8, 'g': 8, 'h': 8, 'i': 8, 'j': 8, 'k': 8, 'l': 8, 'm': 8, 'n': 8, 'o': 8, 'p': 8, 'q': 8, 'r': 8, 's': 8, 't': 8, 'u': 8, 'v': 8, 'w': 8, 'x': 8, 'y': 8, 'z': 8, 'A': 8, 'B': 8, 'C': 8, 'D': 8, 'E': 8, 'F': 8, 'G': 8, 'H': 8, 'I': 8, 'J': 8, 'K': 8, 'L': 8, 'M': 8, 'N': 8, 'O': 8, 'P': 8, 'Q': 8, 'R': 8, 'S': 8, 'T': 8, 'U': 8, 'V': 8, 'W': 8, 'X': 8, 'Y': 8, 'Z': 8, '_': 9, '0': 1, '1': 1, '2': 1, '3': 1, '4': 1, '5': 1, '6': 1, '7': 1, '8': 1, '9': 1, '.': 6, '-': 7, '=': 10, '+': 11, '*': 12, '/': 13, '^': 14, '(': 15, ')': 16, ' ':9},
         
@@ -69,9 +70,9 @@ def lexerAritmetico(tokens):
    estado = 0
 
 #Iteramos sobre la funcion de transicion
-   for token in tokens:
-      estado = d[estado][token]
-      p_token += token
+   for char_token in token:
+      estado = d[estado][char_token]
+      p_token += char_token
 
 # Imprimimos el valor del token segun el estado en el que termino 
    if estado == 1:
