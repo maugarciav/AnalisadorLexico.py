@@ -1,22 +1,31 @@
 import re
+from tabulate import tabulate
 
+"""
+Conjunto de estados = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17}
+Estado inicial: 0
+Estado de aceptación: {1,2,3,7,8,10,11,12,13,14,15,16,17}}
+Estado de terminación abrupta: {9}
+
+"""
+
+# Sepramos los token para que la funcion lexerAritmetico puedo leerlos individualmente
 def split_cadenas(line):
   numeros_reales_pattern = r'[-]?[\.]?\d+[.]?\d*[(e|E)]?[-]?\d*'
   variables_pattern = r'[A-Za-z][\w]*'
   comment_patern= r'//.*'
   operadores_pattern  = r'[=*+-/^()]'
   
+# Los token se agregan a un arreglo 
   list = re.findall(numeros_reales_pattern + "|" + variables_pattern + "|" + comment_patern + "|" + operadores_pattern,line) 
 
-# LLamamos funcion principal
+# LLamamos funcion principal iternado sobre el arreglo con los tokens
   for token in list:
     lexerAritmetico(token)
 
 def lexerAritmetico(tokens):
 
-   estados_aceptacion = {1,2,3,7,8,10,11,12,13,14,15,16,17}
-
-
+# Funcion transicion
    d = [
         {'a': 8, 'b': 8, 'c': 8, 'd': 8, 'e': 8, 'f': 8, 'g': 8, 'h': 8, 'i': 8, 'j': 8, 'k': 8, 'l': 8, 'm': 8, 'n': 8, 'o': 8, 'p': 8, 'q': 8, 'r': 8, 's': 8, 't': 8, 'u': 8, 'v': 8, 'w': 8, 'x': 8, 'y': 8, 'z': 8, 'A': 8, 'B': 8, 'C': 8, 'D': 8, 'E': 8, 'F': 8, 'G': 8, 'H': 8, 'I': 8, 'J': 8, 'K': 8, 'L': 8, 'M': 8, 'N': 8, 'O': 8, 'P': 8, 'Q': 8, 'R': 8, 'S': 8, 'T': 8, 'U': 8, 'V': 8, 'W': 8, 'X': 8, 'Y': 8, 'Z': 8, '_': 9, '0': 1, '1': 1, '2': 1, '3': 1, '4': 1, '5': 1, '6': 1, '7': 1, '8': 1, '9': 1, '.': 6, '-': 7, '=': 10, '+': 11, '*': 12, '/': 13, '^': 14, '(': 15, ')': 16, ' ':9},
         
@@ -55,16 +64,16 @@ def lexerAritmetico(tokens):
         {'a': 17, 'b': 17, 'c': 17, 'd': 17, 'e': 17, 'f': 17, 'g': 17, 'h': 17, 'i': 17, 'j': 17, 'k': 17, 'l': 17, 'm': 17, 'n': 17, 'o': 17, 'p': 17, 'q': 17, 'r': 17, 's': 17, 't': 17, 'u': 17, 'v': 17, 'w': 17, 'x': 17, 'y': 17, 'z': 17, 'A': 17, 'B': 17, 'C': 17, 'D': 17, 'E': 17, 'F': 17, 'G': 17, 'H': 17, 'I': 17, 'J': 17, 'K': 17, 'L': 17, 'M': 17, 'N': 17, 'O': 17, 'P': 17, 'Q': 17, 'R': 17, 'S': 17, 'T': 17, 'U': 17, 'V': 17, 'W': 17, 'X': 17, 'Y': 17, 'Z': 17, '_' : 17, '0':1, '1':1, '2':1, '3':1, '4':1, '5':1, '6':1, '7':1, '8':1, '9':1, '.' : 17, '-' : 17, '=': 17, '+' : 17, '*' : 17, '/' : 17, '^': 17, '(': 17, ')':17, ' ':17}
         ]
 
-
+#Declaramos variables iniciales
    p_token = ""
    estado = 0
 
-   
+#Iteramos sobre la funcion de transicion
    for token in tokens:
       estado = d[estado][token]
       p_token += token
 
-   
+# Imprimimos el valor del token segun el estado en el que termino 
    if estado == 1:
       print(p_token,"              Entero")
       return True
@@ -110,9 +119,8 @@ def lexerAritmetico(tokens):
    
 
 
-   
-
-with open ("example.txt") as file:
+# Abrimos el archivo en donde estan nuestras expresiones
+with open ("expresiones.txt") as file:
     print("Token     |      Tipo") 
     print()
     for line in file:
